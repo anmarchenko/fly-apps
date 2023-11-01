@@ -1,0 +1,37 @@
+# fly.toml app configuration file generated for ddagent on 2023-11-01T14:03:17+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "ddagent"
+primary_region = "fra"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[build]
+image = "datadog/agent:7"
+
+[env]
+DD_SITE="datadoghq.eu"
+DD_ENV="fly"
+DD_BIND_HOST="fly-global-services"
+DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+DD_APM_ENABLED=true
+DD_APM_NON_LOCAL_TRAFFIC=true
+DD_OTLP_CONFIG_RECEIVER_PROTOCOLS_HTTP_ENDPOINT="0.0.0.0:4318"
+
+[[services]]
+internal_port = 8125
+processes = ["app"]
+protocol = "udp"
+
+[[services]]
+internal_port = 8126
+processes = ["app"]
+protocol = "tcp"
+
+[[services]]
+internal_port = 4318
+processes = ["app"]
+protocol = "tcp"
