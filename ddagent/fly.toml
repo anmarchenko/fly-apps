@@ -5,9 +5,6 @@
 
 app = "ddagent"
 primary_region = "fra"
-kill_signal = "SIGINT"
-kill_timeout = 5
-processes = []
 
 [build]
 image = "datadog/agent:7"
